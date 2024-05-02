@@ -1,0 +1,197 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+label {
+  font-size: 1.2rem;
+  color: #656262;
+}
+
+html,
+body {
+  height: 100dvh;
+  width: 100dvw;
+}
+
+body {
+ 
+
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.form_container {
+  
+  background-color: #fff;
+  padding: 2rem 3rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+  
+}
+
+.form_container > h2 {
+  margin-block: 1rem;
+  padding-block: 0.6rem;
+  color: rgba(0, 212, 255, 1);
+}
+
+.form_container > form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.form_container div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+
+
+span a {
+  text-decoration: none;
+  color: rgba(0, 212, 255, 1);
+}
+
+.home_page {
+  height: 100vh;
+  width: 100vw;
+  background: #000;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-size: 3rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.home_page span {
+  color: rgba(0, 212, 255, 1);
+}
+
+.dropbtn {
+  background-color: transparent;
+  color: #0000008C;
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 400
+	
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 20px 16px 5px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content Link {
+  
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+	color: #000;
+}
+
+.files-container {
+  display: flex;
+  flex-wrap: wrap;
+  
+  gap: 16px; /* Adjusts spacing between the files */
+  padding: 16px;
+  margin: 16px;
+  background-color: #d1d1d1; /* Bootstrap secondary color */
+  border-radius: 8px;
+}
+
+.file-item {
+  flex: 1 1 20%; /* Adjusts the basis to around 20% to fit 5 items per row in a full screen, adjust as needed */
+  max-width: 20%; /* Ensures no item grows beyond 20% width */
+  min-width: 150px; /* Minimum width, adjust based on content */
+
+}
+
+.file-box{
+  position: relative; /* Necessary for positioning the icon */
+  display: flex;
+  overflow: hidden;
+  min-width: 8rem;
+  min-height: 8rem;
+}
+
+.download-icon {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease; /* Smooth transition for the icon appearance */
+}
+
+.file-box:hover .download-icon {
+  
+  opacity: 1; /* Show the icon on hover */
+}
+
+/* Optional: Responsive adjustments */
+@media (max-width: 768px) {
+  .file-item {
+      flex-basis: 50%; /* 2 items per row on smaller screens */
+      max-width: 50%;
+  }
+}
+
+
+@media only screen and (max-width: 1200px){
+  .home_page{
+    font-size: 1.5rem;
+  }
+  .home_page button {
+    padding: 0.6rem 1rem;
+    font-size: 1.5rem;
+  }
+}
