@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import OtpInput from 'react-otp-input';
-import { useEffect } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
+
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+
 
 function Download() {
     const navigate = useNavigate();
     const {userId, fileName } = useParams();
     const [otp, setOtp] = useState('');
-    const [cookies, removeCookie] = useCookies([]);
+
    
     const downloadFile = async () => {
        if(otp.length>5){
@@ -42,29 +40,7 @@ function Download() {
     }
     };
 
-    useEffect(() => {
 
-        const verifyCookie = async () => {
-            const cokie = Cookies.get('token')
-
-            if (!cokie) {
-
-                navigate("/login");
-            }
-            const { data } = await axios.post(
-                "http://localhost:4000",
-                {},
-                { withCredentials: true }
-            );
-            const { status} = data;
-
-
-            return status
-                ? (console.log(""))
-                : (removeCookie("token"), navigate("/login"));
-        };
-        verifyCookie();
-    }, []);
 
     return (
         <div className='container d-flex flex-column justify-content-center align-items-center h-100'>
