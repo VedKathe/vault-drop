@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser");
 const authRoute = require("./Routes/AuthRoute");
 const fileRoute = require("./Routes/FileRoute")
 
-const { MONGO_URL, PORT } = process.env;
+const { MONGO_URL, PORT , FRONTEND} = process.env;
 
 // Configure storage for Multer
 const storage = multer.diskStorage({
@@ -40,7 +40,7 @@ app.listen(PORT, () => {
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: [FRONTEND],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })

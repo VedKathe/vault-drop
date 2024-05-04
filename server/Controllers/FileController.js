@@ -22,7 +22,7 @@ const stripUniqueId = (filename) => {
 // Configure storage for Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    console.log(req.headers['user-id']);
+    
     const userId = req.headers['user-id']; // Assuming user ID is passed in headers
     const userFolder = path.join(__dirname, '..', 'uploads', userId);
   
@@ -43,6 +43,9 @@ const upload = multer({ storage: storage }).single('file');
 const uploadFile = (req, res) => {
     
   upload(req, res, function (err) {
+     const files = req.file
+     const pin = files.filename.split('_')[0];
+    
 
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading.
@@ -53,7 +56,7 @@ const uploadFile = (req, res) => {
     }
 
     // Everything went fine.
-    res.send('File uploaded successfully');
+    res.json({message:"Upload Sucessfully ",pin:pin});
   });
 };
 
@@ -130,15 +133,11 @@ const downloadFile = (req, res) => {
       }
   });
 
-  console.log(fullFileName);
-
   if (!fullFileName) {
       return res.status(404).send('File not found');
   }
 
   const filePath = path.join(__dirname, '..', 'uploads', userId, fullFileName);
-  console.log(filePath);
-  console.log(fileName);
   res.download(filePath, fileName, (err) => {
     if (err) {
         res.status(500).send('Could not download the file');

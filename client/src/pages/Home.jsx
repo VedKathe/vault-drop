@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 import Cookies from "js-cookie";
 import Files from '../components/Files'
+import PinModel from "../components/PinModel"
 
 const Home = () => {
     const navigate = useNavigate();
@@ -13,10 +14,19 @@ const Home = () => {
     const [username, setUsername] = useState("");
     const [userId, setUserId] = useState("");
     const [userData, setuserData] = useState([]);
+    const [pinModel, setpinModel] = useState(false);
+    const [pin, setpin] = useState(null);
     const [fileUploaded, setfileUploaded] = useState(false);
 
     const fileUpload = () => {
         setfileUploaded(!fileUploaded)
+    };
+
+    const showPin = () => {
+        setpinModel(true)
+    };
+    const closePin = () => {
+        setpinModel(false)
     };
 
     const getFiles = async () => {
@@ -65,6 +75,7 @@ const Home = () => {
 
     useEffect(() => {
         getFiles()
+
     }, [userId, fileUploaded])
 
 
@@ -100,20 +111,20 @@ const Home = () => {
         document.body.appendChild(link);
         link.click();
         link.remove();
-        
+
     };
 
-    const navigateToDownload =  async (filename) => {
+    const navigateToDownload = async (filename) => {
         navigate(`/download/${userId}/${filename}`)
     }
 
-    const onFileUpload = async (file,model,setFile) => {
+    const onFileUpload = async (file, model, setFile) => {
 
         if (userData.includes(file.name)) {
-            
+
             alert("File Already Exist");
             return
-        } 
+        }
 
         const formData = new FormData();
         formData.append('file', file);
@@ -125,15 +136,17 @@ const Home = () => {
                 'user-id': userId
             }
         }).then(function (response) {
-            
+
+            setpin(response.data.pin);
             setTimeout(() => {
                 setFile(null)
                 fileUpload()
                 model()
+                showPin()
             }, 1000)
 
         }).catch(error =>
-           console.log(error)
+            console.log(error)
         );
     };
 
@@ -146,12 +159,19 @@ const Home = () => {
                     {
                         (userData.length === 0) ? (<div className="no-file h4"> No File Uploaded</div>) : (Array.isArray(userData) &&
                             userData.map((file, index) => (
-                                <Files key={index} className="file-item" filename={file} deleteFile={deleteFile} downloadFile={downloadFile} navigateToDownload ={navigateToDownload}></Files>
+                                <Files key={index} className="file-item" filename={file} deleteFile={deleteFile} downloadFile={downloadFile} navigateToDownload={navigateToDownload}></Files>
                             )))
 
                     }
                 </div>
             </div>
+            <PinModel
+                
+                pin ={pin}
+                model={closePin}
+                show={pinModel}
+                onHide={() => setpinModel(false)}
+            />
             <ToastContainer />
         </div>
     );

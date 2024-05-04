@@ -52,7 +52,7 @@ function Navs({ logout, filename, deleteFile,downloadFile ,navigateToDownload}) 
           <Button variant="secondary" onClick={handleClose}>
             No
           </Button>
-          <Button variant="primary" onClick={()=>{deleteFile(filename)}}>
+          <Button variant="primary" onClick={()=>{deleteFile(filename); handleClose()}}>
             Yes
           </Button>
         </Modal.Footer>

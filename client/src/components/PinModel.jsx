@@ -5,39 +5,8 @@ import { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
-function UploadModel({ fileUpload, userid, model, show, onHide ,pin}) {
-    const [file, setFile] = useState(null);
-
-    const handleChange = (file) => {
-        setFile(file);
-    };
-
-    function handleChange1(event) {
-        setFile(event.target.files[0])
-    }
+function UploadModel({ model, show, onHide ,pin}) {
     
-
-
-    const onFileUpload = async () => {
-        const formData = new FormData();
-        formData.append('file', file);
-
-
-        await axios.post("http://localhost:4000/file/upload", formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'user-id': userid
-            }
-        }).then(function (response) {
-            setTimeout(() => {
-                fileUpload()
-                model()
-            }, 1000)
-
-        }).catch(error =>
-           console.log(error)
-        );
-    };
 
     return (
         <Modal show={show} onHide={onHide}
@@ -47,7 +16,7 @@ function UploadModel({ fileUpload, userid, model, show, onHide ,pin}) {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Upload File
+                    Save this Pin
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -56,8 +25,7 @@ function UploadModel({ fileUpload, userid, model, show, onHide ,pin}) {
                        
                         <div className="mb-3">
                             <label for="formFile" className="form-label w-100 text-center py-3">This is Pin For file</label>
-                            <label for="formFile" className="form-label w-100 text-center py-3">{}</label>
-
+                            <label for="formFile" className="form-label w-100 text-center py-3 h3">{pin}</label>
                         </div>
                     </div>
                     

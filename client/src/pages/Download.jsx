@@ -26,7 +26,10 @@ function Download() {
             document.body.appendChild(link);
             link.click();
             link.remove();
-            navigate('/')
+            setTimeout(() => {
+                navigate('/')
+            }, 1000)
+            
         }
         else{
             
