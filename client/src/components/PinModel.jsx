@@ -1,9 +1,5 @@
 import Modal from 'react-bootstrap/Modal';
-import { Button } from 'react-bootstrap';
-import { FileUploader } from "react-drag-drop-files";
-import { useState } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+
 
 function UploadModel({ model, show, onHide ,pin}) {
     

@@ -2,22 +2,14 @@ import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import { FileUploader } from "react-drag-drop-files";
 import { useState } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 
-function UploadModel({ fileUpload, userid, model, show, onHide, userData,onFileUpload }) {
+
+function UploadModel({ model, show, onHide,onFileUpload }) {
     const [file, setFile] = useState(null);
 
     const handleChange = (file) => {
         setFile(file);
     };
-
-    function handleChange1(event) {
-   
-        setFile(event.target.files[0])
-    }
-    
-
 
     // const onFileUpload = async () => {
        
@@ -77,7 +69,7 @@ function UploadModel({ fileUpload, userid, model, show, onHide, userData,onFileU
             <Modal.Footer>
                 <Button className='btn-warning' onClick={()=>{onFileUpload(file,model,setFile)}}>Upload</Button>
             </Modal.Footer>
-            <ToastContainer></ToastContainer>
+  
         </Modal>
     );
 }

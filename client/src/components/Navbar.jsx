@@ -2,7 +2,7 @@
 import UploadModel from "./Upload";
 import { useState } from "react";
 
-function Navs({ user,logout,userid,fileUpload,userData,onFileUpload}) {
+function Navs({ user,logout,onFileUpload}) {
 
   const [modalShow, setModalShow] = useState(false);
 
@@ -15,7 +15,7 @@ function Navs({ user,logout,userid,fileUpload,userData,onFileUpload}) {
     <nav className="navbar navbar-expand-lg navbar-light bg-white bg-gradient shadow-lg ">
       <div className="container">
         <a className="navbar-brand " href="/">
-          <span className="text-warning ">Image</span>UP
+          <span className="text-warning px-1">Vault</span>Drop
         </a>
         <button
           className="navbar-toggler"
@@ -55,10 +55,9 @@ function Navs({ user,logout,userid,fileUpload,userData,onFileUpload}) {
         </div>
       </div>
       <UploadModel
-      userData={userData}
-        userid={userid}
+      
         onFileUpload={onFileUpload}
-        fileUpload={fileUpload}
+        
         model={handleChange}
         show={modalShow}
         onHide={() => setModalShow(false)}

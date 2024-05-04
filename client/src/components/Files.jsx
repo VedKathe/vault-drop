@@ -1,12 +1,12 @@
 
-import { FaFile } from "react-icons/fa6";
+
 import { FaFilePdf, FaFileWord, FaFileExcel, FaFileImage, FaFileAlt, FaFilePowerpoint, FaFileCode } from 'react-icons/fa';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { MdOutlineFileDownload } from "react-icons/md";
 import { MdOutlineDelete } from "react-icons/md";
-function Navs({ logout, filename, deleteFile,downloadFile ,navigateToDownload}) {
+function Navs({ logout, filename, deleteFile ,navigateToDownload}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);

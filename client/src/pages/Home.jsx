@@ -1,3 +1,5 @@
+
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -100,19 +102,7 @@ const Home = () => {
             );
     };
 
-    const downloadFile = async (filename) => {
-
-        const response = await fetch(`http://localhost:4000/file/download/${userId}/${filename}`);
-        const blob = await response.blob();
-        const downloadUrl = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-    };
+  
 
     const navigateToDownload = async (filename) => {
         navigate(`/download/${userId}/${filename}`)
@@ -152,21 +142,21 @@ const Home = () => {
 
     return (
         <div className="files-background d-flex flex-column justi">
-            <Navbar user={username} userid={userId} fileUpload={fileUpload} onFileUpload={onFileUpload} logout={Logout}></Navbar>
+            <Navbar user={username} onFileUpload={onFileUpload} logout={Logout}></Navbar>
             <div className="h-100">
                 <div className="files-container h-100 px-2">
 
                     {
                         (userData.length === 0) ? (<div className="no-file h4"> No File Uploaded</div>) : (Array.isArray(userData) &&
                             userData.map((file, index) => (
-                                <Files key={index} className="file-item" filename={file} deleteFile={deleteFile} downloadFile={downloadFile} navigateToDownload={navigateToDownload}></Files>
+                                <Files key={index} className="file-item" filename={file} deleteFile={deleteFile}  navigateToDownload={navigateToDownload}></Files>
                             )))
 
                     }
                 </div>
             </div>
             <PinModel
-                
+    
                 pin ={pin}
                 model={closePin}
                 show={pinModel}

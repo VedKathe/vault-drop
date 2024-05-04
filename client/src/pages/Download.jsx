@@ -56,7 +56,7 @@ function Download() {
                 {},
                 { withCredentials: true }
             );
-            const { status, user, userId } = data;
+            const { status} = data;
 
 
             return status
