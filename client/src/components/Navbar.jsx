@@ -2,12 +2,16 @@
 import UploadModel from "./Upload";
 import { useState } from "react";
 
-function Navs({...props}) {
-const {user} = props
-const {logout} = props
-const [modalShow, setModalShow] = useState(false);
+function Navs({ user,logout,userid,fileUpload}) {
+
+  const [modalShow, setModalShow] = useState(false);
+
+  const handleChange = () =>{
+    setModalShow(false)
+  }
+
   return (
-<nav className="navbar navbar-expand-lg navbar-light bg-white bg-gradient shadow-lg ">
+    <nav className="navbar navbar-expand-lg navbar-light bg-white bg-gradient shadow-lg ">
       <div className="container">
         <a className="navbar-brand " href="/">
           <span className="text-warning ">Image</span>UP
@@ -24,32 +28,35 @@ const [modalShow, setModalShow] = useState(false);
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <button className="btn btn-warning mx-2" onClick={() => setModalShow(true)}>
-                  Upload
-                </button>
-              </li>
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <button className="btn btn-warning mx-2" onClick={() => setModalShow(true)}>
+                Upload
+              </button>
+            </li>
 
-              <li className="nav-item">
-                <div className="dropdown">
-                  <button className="dropbtn  px-4">{user}</button>
-                  <div className="dropdown-content">
-                    <a
-                      className="nav-link"
-                      href="/"
-                      onClick={logout}
-                    >
-                      Logout
-                    </a>
-                  </div>
+            <li className="nav-item">
+              <div className="dropdown">
+                <button className="dropbtn  px-4">{user}</button>
+                <div className="dropdown-content">
+                  <a
+                    className="nav-link"
+                    href="/"
+                    onClick={logout}
+                  >
+                    Logout
+                  </a>
                 </div>
-              </li>
-            </ul>
+              </div>
+            </li>
+          </ul>
 
         </div>
       </div>
       <UploadModel
+        userid={userid}
+        fileUpload={fileUpload}
+        model={handleChange}
         show={modalShow}
         onHide={() => setModalShow(false)}
       />

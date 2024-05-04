@@ -37,6 +37,18 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.no-file{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.files-background{
+  
+  height: 95dvh;
+}
+
 .form_container {
   
   background-color: #fff;
@@ -44,6 +56,7 @@ body {
   border-radius: 0.5rem;
   width: 100%;
   max-width: 400px;
+  height: 100%;
   
 }
 
@@ -65,7 +78,16 @@ body {
   gap: 0.3rem;
 }
 
-
+.name-box{
+  max-width: 9rem;
+  position: relative;
+}
+.name{
+  white-space: nowrap; /* Prevents text from wrapping */
+  overflow: hidden; /* Hides overflowing text */
+  text-overflow: ellipsis;
+  
+}
 
 span a {
   text-decoration: none;

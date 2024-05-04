@@ -1,8 +1,11 @@
-const router = require('express').Router()
-const {uploadFile} = require('../Controllers/FileController')
+const express = require('express');
+const uploadController = require('../Controllers/FileController');
 
-router.post('/upload', uploadFile)
-// router.post('/delete', Login)
-// router.post('/',userVerification)
+const router = express.Router();
 
-module.exports = router
+router.post('/upload', uploadController.uploadFile);
+router.delete('/delete/:userId/:fileName', uploadController.deleteFile);
+router.get('/', uploadController.listFiles);
+router.get('/download/:userId/:fileName', uploadController.downloadFile);
+
+module.exports = router;
