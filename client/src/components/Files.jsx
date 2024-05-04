@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { MdOutlineFileDownload } from "react-icons/md";
 import { MdOutlineDelete } from "react-icons/md";
-function Navs({ logout, filename, deleteFile,downloadFile }) {
+function Navs({ logout, filename, deleteFile,downloadFile ,navigateToDownload}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -40,7 +40,7 @@ function Navs({ logout, filename, deleteFile,downloadFile }) {
         {iconComponent}
         <div className="download-icon">
           <MdOutlineDelete size={22} onClick={handleShow} />
-          <MdOutlineFileDownload size={22} onClick={() => { downloadFile(filename)}} />
+          <MdOutlineFileDownload size={22} onClick={() => { navigateToDownload(filename)}} />
         </div>
       </div>
       <div className="text-dark p-2 name" title={filename}>{filename}</div>

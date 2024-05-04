@@ -1,6 +1,24 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs')
+const UniqueId = require("../Models//UniqueIDModel");
+
+//to Create 6 digit unique ID
+const generateUniqueId = async () => {
+  let uniqueId;
+  do {
+      uniqueId = Math.floor(100000 + Math.random() * 900000).toString();
+  } while (await UniqueId.findOne({ generated_id: uniqueId }));
+
+  await UniqueId.create({ generated_id: uniqueId });
+  return uniqueId;
+};
+
+//to Seprate Filename
+const stripUniqueId = (filename) => {
+  return filename.substring(filename.indexOf('_') + 1);
+};
+
 // Configure storage for Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -13,13 +31,15 @@ const storage = multer.diskStorage({
     }
     cb(null, userFolder);
   },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname );
+  filename: async (req, file, cb) => {
+    const uniqueId = await generateUniqueId();
+    const filename = uniqueId + "_" + file.originalname;
+    cb(null, filename);
   }
 });
-
 const upload = multer({ storage: storage }).single('file');
 
+//to upload file
 const uploadFile = (req, res) => {
     
   upload(req, res, function (err) {
@@ -37,10 +57,15 @@ const uploadFile = (req, res) => {
   });
 };
 
+//to get list of all files of the user
 const listFiles = (req, res) => {
   const userId = req.headers['user-id'];
-  console.log(userId);
+  
   const directoryPath = path.join(__dirname, '../uploads',userId);
+
+  if (!fs.existsSync(directoryPath)) {
+    fs.mkdirSync(directoryPath);
+  }
 
   fs.readdir(directoryPath, function (err, files) {
     if (err) {
@@ -49,56 +74,77 @@ const listFiles = (req, res) => {
         error: err.message,
       });
     }
-    // let fileList = files.map(file => {
-    //   return {
-    //     name: file,
-    //     url: `${req.protocol}://${req.get('host')}/uploads/${file}`
-    //   };
-    // });
-    res.send(files);
+
+   const filenamesWithoutPrefix = files.map(stripUniqueId);
+
+    res.send(filenamesWithoutPrefix);
   });
 };
 
+//to delete selected file of the user
 const deleteFile = (req, res) => {
   const userId = req.params.userId;
   const fileName = req.params.fileName;
   
-  const filePath = path.join('uploads', userId, fileName);
-  console.log(filePath);
-  fs.access(filePath, fs.constants.F_OK, (err) => {
-      if (err) {
-          return res.status(404).json({ message: "File not found" });
-      }
+  const directoryPath = path.join(__dirname, '..', 'uploads', userId);
+    const files = fs.readdirSync(directoryPath);
 
-      fs.unlink(filePath, (err) => {
-          if (err) {
-              return res.status(500).json({ message: "Unable to delete the file", error: err });
-          }
-          res.status(200).json({ message: "File deleted successfully" });
-      });
-  });
+    const fullFileName = files.find(f => stripUniqueId(f) === fileName);
+
+    if (!fullFileName) {
+        return res.status(404).json({ message: "File not found" });
+    }
+
+    const filePath = path.join(directoryPath, fullFileName);
+    const uniqueId = fullFileName.split('_')[0]; // Assuming the ID is before the first underscore
+
+    fs.unlink(filePath, async (err) => {
+        if (err) {
+            return res.status(500).json({ message: "Unable to delete the file", error: err });
+        }
+
+        try {
+            await UniqueId.findOneAndDelete({ generated_id: uniqueId });
+            res.status(200).json({ message: "File deleted successfully" });
+        } catch (error) {
+            res.status(500).json({ message: "Unable to delete the file entry from database", error });
+        }
+    });
 };
 
 // Function to download a file
 const downloadFile = (req, res) => {
   const userId = req.params.userId;
   const fileName = req.params.fileName;
- 
-  const filePath = path.join(__dirname, '..', 'uploads', userId, fileName);
-  console.log(filePath);
-  fs.access(filePath, fs.constants.F_OK, (err) => {
-      if (err) {
-          return res.status(404).send('File not found');
-      }
+  const searchString = req.query.searchString;
 
-      // Set the headers to inform the browser about the type of content
-      // This will prompt a download dialog in the browser
-      res.download(filePath, fileName, (err) => {
-          if (err) {
-              res.status(500).send('Could not download the file');
-          }
-      });
+  const directoryPath = path.join(__dirname, '..', 'uploads', userId);
+  const files = fs.readdirSync(directoryPath);
+
+  const fullFileName = files.find(f => {
+    const fileNameWithoutUniqueId = stripUniqueId(f);
+    const prefix = f.split('_')[0];
+    if(fileNameWithoutUniqueId == fileName && prefix == searchString)
+      {
+        return true
+      }
   });
+
+  console.log(fullFileName);
+
+  if (!fullFileName) {
+      return res.status(404).send('File not found');
+  }
+
+  const filePath = path.join(__dirname, '..', 'uploads', userId, fullFileName);
+  console.log(filePath);
+  console.log(fileName);
+  res.download(filePath, fileName, (err) => {
+    if (err) {
+        res.status(500).send('Could not download the file');
+    }
+  });
+ 
 };
 
 module.exports = {

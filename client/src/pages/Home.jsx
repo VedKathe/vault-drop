@@ -103,23 +103,53 @@ const Home = () => {
         
     };
 
+    const navigateToDownload =  async (filename) => {
+        navigate(`/download/${userId}/${filename}`)
+    }
+
+    const onFileUpload = async (file,model,setFile) => {
+
+        if (userData.includes(file.name)) {
+            
+            alert("File Already Exist");
+            return
+        } 
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+
+        await axios.post("http://localhost:4000/file/upload", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'user-id': userId
+            }
+        }).then(function (response) {
+            
+            setTimeout(() => {
+                setFile(null)
+                fileUpload()
+                model()
+            }, 1000)
+
+        }).catch(error =>
+           console.log(error)
+        );
+    };
 
     return (
         <div className="files-background d-flex flex-column justi">
-            <Navbar user={username} userid={userId} fileUpload={fileUpload} logout={Logout}></Navbar>
+            <Navbar user={username} userid={userId} fileUpload={fileUpload} onFileUpload={onFileUpload} logout={Logout}></Navbar>
             <div className="h-100">
                 <div className="files-container h-100 px-2">
 
                     {
                         (userData.length === 0) ? (<div className="no-file h4"> No File Uploaded</div>) : (Array.isArray(userData) &&
                             userData.map((file, index) => (
-                                <Files key={index} className="file-item" filename={file} deleteFile={deleteFile} downloadFile={downloadFile} ></Files>
+                                <Files key={index} className="file-item" filename={file} deleteFile={deleteFile} downloadFile={downloadFile} navigateToDownload ={navigateToDownload}></Files>
                             )))
 
                     }
-
-
-
                 </div>
             </div>
             <ToastContainer />

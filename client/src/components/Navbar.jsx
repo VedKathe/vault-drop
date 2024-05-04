@@ -2,13 +2,14 @@
 import UploadModel from "./Upload";
 import { useState } from "react";
 
-function Navs({ user,logout,userid,fileUpload}) {
+function Navs({ user,logout,userid,fileUpload,userData,onFileUpload}) {
 
   const [modalShow, setModalShow] = useState(false);
 
   const handleChange = () =>{
     setModalShow(false)
   }
+
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white bg-gradient shadow-lg ">
@@ -54,7 +55,9 @@ function Navs({ user,logout,userid,fileUpload}) {
         </div>
       </div>
       <UploadModel
+      userData={userData}
         userid={userid}
+        onFileUpload={onFileUpload}
         fileUpload={fileUpload}
         model={handleChange}
         show={modalShow}
