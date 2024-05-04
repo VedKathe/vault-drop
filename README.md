@@ -73,3 +73,8 @@ npm start
 ```
 This command will open http://localhost:3000 in your default web browser.
 
+##Output
+![photo-collage png](https://github.com/VedKathe/vault-drop/assets/96811754/27a2f2bb-8be2-4b5c-8233-e2c8b9f558a2)
+
+- **Note**: Hover over to File icon to see download,delete options
+
