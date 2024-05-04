@@ -13,7 +13,7 @@ function Download() {
    
     const downloadFile = async () => {
        if(otp.length>5){
-        const response = await fetch(`http://localhost:4000/file/download/${userId}/${fileName}?searchString=${otp}`);
+        const response = await fetch(`${process.env.REACT_APP_API_POINT}/file/download/${userId}/${fileName}?searchString=${otp}`);
         if(response.ok){
            
             const blob = await response.blob();

@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -12,6 +10,7 @@ import PinModel from "../components/PinModel"
 
 const Home = () => {
     const navigate = useNavigate();
+   
     const [cookies, removeCookie] = useCookies([]);
     const [username, setUsername] = useState("");
     const [userId, setUserId] = useState("");
@@ -32,7 +31,7 @@ const Home = () => {
     };
 
     const getFiles = async () => {
-        const response = await axios.get("http://localhost:4000/file", {
+        const response = await axios.get(`${process.env.REACT_APP_API_POINT}/file`, {
             headers: {
                 'user-id': userId
             }
@@ -60,7 +59,7 @@ const Home = () => {
                 navigate("/login");
             }
             const { data } = await axios.post(
-                "http://localhost:4000",
+                `${process.env.REACT_APP_API_POINT}`,
                 {},
                 { withCredentials: true }
             );
@@ -88,7 +87,7 @@ const Home = () => {
 
     const deleteFile = async (filename) => {
 
-        const response = await axios.delete(`http://localhost:4000/file/delete/${userId}/${filename}`)
+        const response = await axios.delete(`${process.env.REACT_APP_API_POINT}/file/delete/${userId}/${filename}`)
             .then(function (response) {
 
                 fileUpload()
@@ -120,7 +119,7 @@ const Home = () => {
         formData.append('file', file);
 
 
-        await axios.post("http://localhost:4000/file/upload", formData, {
+        await axios.post(`${process.env.REACT_APP_API_POINT}/file/upload`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'user-id': userId

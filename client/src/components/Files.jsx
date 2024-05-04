@@ -1,6 +1,6 @@
 
 
-import { FaFilePdf, FaFileWord, FaFileExcel, FaFileImage, FaFileAlt, FaFilePowerpoint, FaFileCode } from 'react-icons/fa';
+import { FaFilePdf, FaFileWord, FaFileExcel, FaFileImage, FaFileAlt, FaFilePowerpoint, FaFileCode ,FaFileVideo,FaFileArchive,FaFileAudio} from 'react-icons/fa';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -29,6 +29,19 @@ function Navs({ logout, filename, deleteFile ,navigateToDownload}) {
     js: <FaFileCode size={70} />,
     css: <FaFileCode size={70} />,
     html: <FaFileCode size={70} />,
+    mp3: <FaFileAudio size={70} />,
+    wav: <FaFileAudio size={70} />,
+    mp4: <FaFileVideo size={70} />,
+    mov: <FaFileVideo size={70} />,
+    avi: <FaFileVideo size={70} />,
+    mkv: <FaFileVideo size={70} />,
+    flv: <FaFileVideo size={70} />,
+    rtf: <FaFileWord size={70} />,
+    json: <FaFileCode size={70} />,
+    xml: <FaFileCode size={70} />,
+    php: <FaFileCode size={70} />,
+    zip: <FaFileArchive size={70} />,
+    rar: <FaFileArchive size={70} />,
     default: <FaFileAlt size={70} />
   };
 

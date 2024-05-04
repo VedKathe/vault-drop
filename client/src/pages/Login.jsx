@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
+
   const [inputValue, setInputValue] = useState({
     username: "",
     password: "",
@@ -22,9 +23,6 @@ const Login = () => {
   const handleError = (err) =>
     toast.error(err, {
         position: "bottom-left",
-
-
-       
     });
 
   const handleSuccess = (msg) =>
@@ -39,7 +37,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/login",
+        `${process.env.REACT_APP_API_POINT}/login`,
         {
           ...inputValue,
         },
@@ -72,6 +70,7 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">Username</label>
+  
           <input
           className="form-control"
             type="text"
